@@ -1,5 +1,6 @@
 streamlit
 langchain
 requests
+langchain-google-genai
 
 
