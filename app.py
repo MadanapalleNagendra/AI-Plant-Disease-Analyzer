@@ -8,7 +8,7 @@ import os
 import time
 
 # Set up API key
-google_api_key = "AIzaSyAuPij3vtMkyLaH6RFVsqSg-lEugoKUPE4"
+google_api_key = st.secrets["GOOGLE_API_KEY"]
 
 # Initialize Gemini model
 chat_model = ChatGoogleGenerativeAI(
