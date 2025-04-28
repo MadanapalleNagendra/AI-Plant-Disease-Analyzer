@@ -150,7 +150,7 @@ with col2:
                 txt_link = f"data:text/plain;base64,{txt_base64}"
 
                 # Display download button
-                col4a, col4b = st.columns([1, 1])
+                col4a = st.columns([1])
 
                 with col4a:
                     st.markdown(
