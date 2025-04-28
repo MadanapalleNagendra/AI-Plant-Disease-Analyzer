@@ -103,31 +103,30 @@ with col2:
 
                 # Create HumanMessage with text and image_url
                 message = HumanMessage(
-                content=[
-                    {
-                        "type": "text",
-                        "text": f"You are an expert agricultural assistant. Please analyze the plant image and provide the following details:\n"
-                                f"1. Name of disease (if any)\n"
-                                f"2. Description of symptoms\n"
-                                f"3. Suggested treatment or medicine\n"
-                                f"4. Specialized doctor recommendations for further diagnosis and treatment:\n"
-                                f"    - Plant Pathologist: For detailed analysis of plant diseases\n"
-                                f"    - Horticulturist: For guidance on plant care and treatment\n"
-                                f"    - Agricultural Scientist: For research-based treatment options\n"
-                                f"    - Pest Management Specialist: To identify and handle pest-related issues\n"
-                                f"5. Where to go for further assistance:\n"
-                                f"    - Local Agricultural Extension Office for expert consultations\n"
-                                f"    - Local Plant Clinics for in-person diagnosis and care\n"
-                                f"    - Online consultation platforms like [PlantNet](https://plantnet.org) for immediate advice\n"
-                                f"Please answer in {languages[selected_language]}. Use bullet points."
-                    },
-                    {
-                        "type": "image_url",
-                        "image_url": {"url": image_data_url}
-                    }
-                ]
-            )
-
+                    content=[
+                        {
+                            "type": "text",
+                            "text": f"You are an expert agricultural assistant. Please analyze the plant image and provide the following details:\n"
+                                    f"1. Name of disease (if any)\n"
+                                    f"2. Description of symptoms\n"
+                                    f"3. Suggested treatment or medicine\n"
+                                    f"4. Specialized doctor recommendations for further diagnosis and treatment:\n"
+                                    f"    - Plant Pathologist: For detailed analysis of plant diseases\n"
+                                    f"    - Horticulturist: For guidance on plant care and treatment\n"
+                                    f"    - Agricultural Scientist: For research-based treatment options\n"
+                                    f"    - Pest Management Specialist: To identify and handle pest-related issues\n"
+                                    f"5. Where to go for further assistance:\n"
+                                    f"    - Local Agricultural Extension Office for expert consultations\n"
+                                    f"    - Local Plant Clinics for in-person diagnosis and care\n"
+                                    f"    - Online consultation platforms like [PlantNet](https://plantnet.org) for immediate advice\n"
+                                    f"Please answer in {languages[selected_language]}. Use bullet points."
+                        },
+                        {
+                            "type": "image_url",
+                            "image_url": {"url": image_data_url}
+                        }
+                    ]
+                )
 
                 response = chat_model.invoke([message])
 
@@ -140,18 +139,17 @@ with col2:
                 st.balloons()
                 st.toast('🎉 Thank you for using AI Plant Analyzer!', icon='🌿')
 
-                # Generate download buttons (PDF / TXT)
+                # Result text
                 result_text = response.content
 
-
-                # PDF generation (adjusted for UTF-8 encoding)
+                # PDF generation
                 def generate_pdf(text):
                     pdf = FPDF()
                     pdf.set_auto_page_break(auto=True, margin=15)
                     pdf.add_page()
                     pdf.set_font("Arial", size=12)
                     pdf.multi_cell(0, 10, text.encode('latin-1', 'replace').decode('latin-1'))
-                    return pdf.output(dest='S').encode('utf-8')  # Using UTF-8 encoding
+                    return pdf.output(dest='S').encode('latin-1')
 
                 pdf_data = generate_pdf(result_text)
                 pdf_base64 = base64.b64encode(pdf_data).decode("utf-8")
@@ -165,16 +163,19 @@ with col2:
                 txt_base64 = base64.b64encode(txt_data).decode("utf-8")
                 txt_link = f"data:text/plain;base64,{txt_base64}"
 
-                # Display buttons
+                # Display download buttons
                 col3, col4 = st.columns([1, 1])
                 with col3:
-                    st.markdown(
-                        f'<a href="data:application/pdf;base64,{pdf_base64}" download="analysis_results.pdf"><button style="background-color: green; color: white; padding: 10px; border-radius: 5px; border: none; font-size: 16px; cursor: pointer; transition: background-color 0.3s;">📄 Download as PDF</button></a>',
-                        unsafe_allow_html=True
+                    st.download_button(
+                        label="📄 Download as PDF",
+                        data=pdf_data,
+                        file_name="analysis_results.pdf",
+                        mime="application/pdf"
                     )
                 with col4:
                     st.markdown(
-                        f'<a href="data:text/plain;base64,{txt_base64}" download="analysis_results.txt"><button style="background-color: blue; color: white; padding: 10px; border-radius: 5px; border: none; font-size: 16px; cursor: pointer; transition: background-color 0.3s;">📑 Download as TXT</button></a>',
+                        f'<a href="{txt_link}" download="analysis_results.txt">'
+                        f'<button style="background-color: blue; color: white; padding: 10px; border-radius: 5px; border: none; font-size: 16px; cursor: pointer; transition: background-color 0.3s;">📑 Download as TXT</button></a>',
                         unsafe_allow_html=True
                     )
 
