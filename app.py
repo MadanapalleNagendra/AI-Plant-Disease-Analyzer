@@ -128,7 +128,7 @@ with col2:
                 )
 
                 
-                response = chat_model.invoke(message)
+                response = chat_model.invoke([message])
 
                 st.success("✅ Analysis Complete!")
                 st.markdown(f"### 📋 Results in {selected_language}:")
@@ -141,24 +141,7 @@ with col2:
 
                 # Result text
                 result_text = response.content
-
-                # TXT generation
-                def generate_txt(text):
-                    return text.encode('utf-8')
-
-                txt_data = generate_txt(result_text)
-                txt_base64 = base64.b64encode(txt_data).decode("utf-8")
-                txt_link = f"data:text/plain;base64,{txt_base64}"
-
-                # Display download button
-                col4a = st.columns([1])
-
-                with col4a:
-                    st.markdown(
-                        f'<a href="{txt_link}" download="analysis_results.txt">'
-                        f'<button style="background-color: blue; color: white; padding: 10px; border-radius: 5px; border: none; font-size: 16px; cursor: pointer; transition: background-color 0.3s;">📑 Download as TXT</button></a>',
-                        unsafe_allow_html=True
-                    )
+                
 
             except Exception as e:
                 st.error(f"❌ Error during analysis: {e}")
