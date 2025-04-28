@@ -164,7 +164,7 @@ with col2:
                 txt_link = f"data:text/plain;base64,{txt_base64}"
 
                 # Display download buttons
-                col4 = st.columns([1, 1])
+                # col4 = st.columns([1, 1])
                 # with col3:
                 #     st.download_button(
                 #         label="📄 Download as PDF",
@@ -172,13 +172,14 @@ with col2:
                 #         file_name="analysis_results.pdf",
                 #         mime="application/pdf"
                 #     )
-                with col4:
+                col4a, col4b = st.columns([1, 1])
+
+                with col4a:
                     st.markdown(
                         f'<a href="{txt_link}" download="analysis_results.txt">'
                         f'<button style="background-color: blue; color: white; padding: 10px; border-radius: 5px; border: none; font-size: 16px; cursor: pointer; transition: background-color 0.3s;">📑 Download as TXT</button></a>',
                         unsafe_allow_html=True
                     )
-
             except Exception as e:
                 st.error(f"❌ Error during analysis: {e}")
     else:
