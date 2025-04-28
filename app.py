@@ -127,6 +127,7 @@ with col2:
                     ]
                 )
 
+                
                 response = chat_model.invoke(message)
 
                 st.success("✅ Analysis Complete!")
@@ -134,7 +135,7 @@ with col2:
                 st.write(response.content)
 
                 # 🎉 Confetti effect after success
-                time.sleep(1)  # slight delay for smoother feel
+                time.sleep(1)
                 st.balloons()
                 st.toast('🎉 Thank you for using AI Plant Analyzer!', icon='🌿')
 
