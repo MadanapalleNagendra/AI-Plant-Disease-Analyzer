@@ -142,18 +142,18 @@ with col2:
                 # Result text
                 result_text = response.content
 
-                # PDF generation
-                def generate_pdf(text):
-                    pdf = FPDF()
-                    pdf.set_auto_page_break(auto=True, margin=15)
-                    pdf.add_page()
-                    pdf.set_font("Arial", size=12)
-                    pdf.multi_cell(0, 10, text.encode('latin-1', 'replace').decode('latin-1'))
-                    return pdf.output(dest='S').encode('latin-1')
+                # # PDF generation
+                # def generate_pdf(text):
+                #     pdf = FPDF()
+                #     pdf.set_auto_page_break(auto=True, margin=15)
+                #     pdf.add_page()
+                #     pdf.set_font("Arial", size=12)
+                #     pdf.multi_cell(0, 10, text.encode('latin-1', 'replace').decode('latin-1'))
+                #     return pdf.output(dest='S').encode('latin-1')
 
-                pdf_data = generate_pdf(result_text)
-                pdf_base64 = base64.b64encode(pdf_data).decode("utf-8")
-                pdf_link = f"data:application/pdf;base64,{pdf_base64}"
+                # pdf_data = generate_pdf(result_text)
+                # pdf_base64 = base64.b64encode(pdf_data).decode("utf-8")
+                # pdf_link = f"data:application/pdf;base64,{pdf_base64}"
 
                 # TXT generation
                 def generate_txt(text):
@@ -164,14 +164,14 @@ with col2:
                 txt_link = f"data:text/plain;base64,{txt_base64}"
 
                 # Display download buttons
-                col3, col4 = st.columns([1, 1])
-                with col3:
-                    st.download_button(
-                        label="📄 Download as PDF",
-                        data=pdf_data,
-                        file_name="analysis_results.pdf",
-                        mime="application/pdf"
-                    )
+                col4 = st.columns([1, 1])
+                # with col3:
+                #     st.download_button(
+                #         label="📄 Download as PDF",
+                #         data=pdf_data,
+                #         file_name="analysis_results.pdf",
+                #         mime="application/pdf"
+                #     )
                 with col4:
                     st.markdown(
                         f'<a href="{txt_link}" download="analysis_results.txt">'
