@@ -127,7 +127,7 @@ with col2:
                     ]
                 )
 
-                response = chat_model.invoke([message])
+                response = chat_model.invoke(message)
 
                 st.success("✅ Analysis Complete!")
                 st.markdown(f"### 📋 Results in {selected_language}:")
