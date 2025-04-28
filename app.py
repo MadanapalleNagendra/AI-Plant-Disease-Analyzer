@@ -3,7 +3,6 @@ import streamlit.components.v1 as components
 import base64
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage
-from fpdf import FPDF
 import os
 import time
 
@@ -142,18 +141,7 @@ with col2:
                 # Result text
                 result_text = response.content
 
-                # # PDF generation
-                # def generate_pdf(text):
-                #     pdf = FPDF()
-                #     pdf.set_auto_page_break(auto=True, margin=15)
-                #     pdf.add_page()
-                #     pdf.set_font("Arial", size=12)
-                #     pdf.multi_cell(0, 10, text.encode('latin-1', 'replace').decode('latin-1'))
-                #     return pdf.output(dest='S').encode('latin-1')
-
-                # pdf_data = generate_pdf(result_text)
-                # pdf_base64 = base64.b64encode(pdf_data).decode("utf-8")
-                # pdf_link = f"data:application/pdf;base64,{pdf_base64}"
+               
 
                 # TXT generation
                 def generate_txt(text):
@@ -164,22 +152,14 @@ with col2:
                 txt_link = f"data:text/plain;base64,{txt_base64}"
 
                 # Display download buttons
-                # col4 = st.columns([1, 1])
-                # with col3:
-                #     st.download_button(
-                #         label="📄 Download as PDF",
-                #         data=pdf_data,
-                #         file_name="analysis_results.pdf",
-                #         mime="application/pdf"
-                #     )
-                col4a, col4b = st.columns([1, 1])
+               col4a, col4b = st.columns([1, 1])
 
-                with col4a:
-                    st.markdown(
-                        f'<a href="{txt_link}" download="analysis_results.txt">'
-                        f'<button style="background-color: blue; color: white; padding: 10px; border-radius: 5px; border: none; font-size: 16px; cursor: pointer; transition: background-color 0.3s;">📑 Download as TXT</button></a>',
-                        unsafe_allow_html=True
-                    )
+               with col4a:
+                        st.markdown(
+                            f'<a href="{txt_link}" download="analysis_results.txt">'
+                            f'<button style="background-color: blue; color: white; padding: 10px; border-radius: 5px; border: none; font-size: 16px; cursor: pointer; transition: background-color 0.3s;">📑 Download as TXT</button></a>',
+                            unsafe_allow_html=True
+                        )
             except Exception as e:
                 st.error(f"❌ Error during analysis: {e}")
     else:
